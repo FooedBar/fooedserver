@@ -3,6 +3,7 @@ package models
 import (
 	"math"
 	"sort"
+	"fmt"
 )
 
 type MenuSuggestionData struct {
@@ -29,6 +30,7 @@ func (suggestion *MenuSuggestionData) MakeMenuSuggestions() error {
 	if err != nil {
 		return err
 	}
+	fmt.Println(allItems)
 	// Initialise and set distance modifier
 	for _, item := range allItems {
 		if _, ok := itemScores[item.Id]; ok == false {
