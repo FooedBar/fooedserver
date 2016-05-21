@@ -13,6 +13,7 @@ func CreateRouter() http.Handler {
 	apiV0Router.HandleFunc("/", Use(api.V0_API, GetContext)).Methods("GET")
 	apiV0Router.HandleFunc("/sessions", Use(api.V0_API_Create_Session, GetContext)).Methods("POST")
 	apiV0Router.HandleFunc("/menuItems", Use(api.V0_API_Get_Menu_Items, RequireSessionId, GetContext)).Methods("GET")
+	apiV0Router.HandleFunc("/restaurants/{id}", Use(api.V0_API_Get_Restaurant, RequireSessionId, GetContext)).Methods("GET")
 	//router.PathPrefix("/uploads/").Handler(uploadsFS)
 	return router
 }

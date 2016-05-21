@@ -15,3 +15,9 @@ type Restaurant struct {
 	CreatedAt   time.Time
 	UpdatedAt   time.Time
 }
+
+func GetRestaurantById(id string) (Restaurant, error) {
+	var restaurant Restaurant
+	err := db.Where("id = ?", id).First(&restaurant).Error
+	return restaurant, err
+}
