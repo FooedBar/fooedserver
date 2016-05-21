@@ -32,7 +32,7 @@ func (suggestion *RestaurantSuggestionData) MakeRestaurantSuggestions() error {
 	// Initialise and set distance modifier
 	for _, item := range allItems {
 		if _, ok := restaurantScores[item.RestaurantId]; ok == false {
-			restaurantScores[item.RestaurantId] -= item.Distance * 3
+			restaurantScores[item.RestaurantId] = 0 // -= item.Distance * 3
 			restaurantDistances[item.RestaurantId] = item.Distance
 		}
 	}
