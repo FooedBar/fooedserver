@@ -6,7 +6,7 @@ import (
 )
 
 type MenuItem struct {
-	Id           int64     `json"id"`
+	Id           int64     `json:"id"`
 	RestaurantId int64     `json:"restaurantId"`
 	ImageUrl     string    `json:"imageUrl"`
 	ImageHeight  int64     `json:"imageHeight"`
