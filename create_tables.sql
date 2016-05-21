@@ -34,6 +34,8 @@ CREATE TABLE IF NOT EXISTS `menu_item` (
     `image_url` varchar(255),
     `image_height` int,
     `image_width` int,
+    `name` varchar(255),
+    `description` varchar(255),
     `flavor` varchar(100),
     `style_one` varchar(200),
     `style_two` varchar(200),
