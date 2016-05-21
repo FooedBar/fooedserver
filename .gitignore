@@ -1,0 +1,6 @@
+.idea
+.DS_Store
+fooedserver.iml
+fooedserver
+config.json
+nohup.out
