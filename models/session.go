@@ -42,7 +42,7 @@ func (session *Session) GetDetailedSelectedMenuItems() ([]DetailedMenuItem, erro
 func (session *Session) GetDetailedSelectedMenuItemsForRestaurant(restaurantId int64) ([]DetailedMenuItem, error) {
 	var selections []DetailedMenuItem
 	err := db.Raw("SELECT menu_item.*, (6371 * acos( cos( radians(" + fmt.Sprintf("%.6f", session.CurrentLat) +
-	") ) * cos( radians( restaurant.lat ) ) * cos( radians(restaurant.long) - radians(" + fmt.Sprintf("%.6f", session.CurrentLong) +
-	")) + sin(radians(" + fmt.Sprintf("%.6f", session.CurrentLat) + "))" + " * sin( radians(restaurant.lat)))) AS distance FROM menu_item, restaurant WHERE menu_item.restaurant_id = restaurant.id AND restaurant.id = " + fmt.Sprint(restaurantId)).Scan(&selections).Error
+		") ) * cos( radians( restaurant.lat ) ) * cos( radians(restaurant.long) - radians(" + fmt.Sprintf("%.6f", session.CurrentLong) +
+		")) + sin(radians(" + fmt.Sprintf("%.6f", session.CurrentLat) + "))" + " * sin( radians(restaurant.lat)))) AS distance FROM menu_item, restaurant WHERE menu_item.restaurant_id = restaurant.id AND restaurant.id = " + fmt.Sprint(restaurantId)).Scan(&selections).Error
 	return selections, err
 }

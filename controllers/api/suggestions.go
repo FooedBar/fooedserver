@@ -3,8 +3,8 @@ package api
 import (
 	"github.com/FooedBar/fooedserver/models"
 	"github.com/FooedBar/fooedserver/utils"
-	"net/http"
 	"github.com/gorilla/mux"
+	"net/http"
 )
 
 func V0_API_Get_Restaurant_Suggestions(w http.ResponseWriter, r *http.Request) {
@@ -60,7 +60,7 @@ func V0_API_Get_Restaurant_Menu_Suggestions(w http.ResponseWriter, r *http.Reque
 		return
 	}
 	request := models.MenuSuggestionData{
-		Session: session,
+		Session:      session,
 		RestaurantId: restaurant.Id,
 	}
 	err = request.MakeMenuSuggestions()
