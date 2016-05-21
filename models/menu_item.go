@@ -38,6 +38,6 @@ func GetMenuItemsByPage(limit int, offset int, session Session) ([]DetailedMenuI
 	var items []DetailedMenuItem
 	err := db.Raw("SELECT menu_item.id, menu_item.restaurant_id, menu_item.image_url, menu_item.image_height, menu_item.image_width, menu_item.name, menu_item.description, (6371 * acos( cos( radians(" + fmt.Sprintf("%.6f", session.CurrentLat) +
 		") ) * cos( radians( restaurant.lat ) ) * cos( radians(restaurant.long) - radians(" + fmt.Sprintf("%.6f", session.CurrentLong) +
-		")) + sin(radians(" + fmt.Sprintf("%.6f", session.CurrentLat) + "))" + " * sin( radians(restaurant.lat)))) AS distance FROM menu_item, restaurant WHERE menu_item.restaurant_id = restaurant.id ORDER BY distance ASC LIMIT " + fmt.Sprint(limit) + " OFFSET " + fmt.Sprint(offset) + " HAVING distance < " + fmt.Sprintf("%.6f", maxDistance)).Scan(&items).Error
+		")) + sin(radians(" + fmt.Sprintf("%.6f", session.CurrentLat) + "))" + " * sin( radians(restaurant.lat)))) AS distance FROM menu_item, restaurant WHERE menu_item.restaurant_id = restaurant.id HAVING distance < " + fmt.Sprintf("%.6f", maxDistance) + " ORDER BY distance ASC LIMIT " + fmt.Sprint(limit) + " OFFSET " + fmt.Sprint(offset)).Scan(&items).Error
 	return items, err
 }
