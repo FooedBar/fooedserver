@@ -38,6 +38,7 @@ type DetailedMenuItem struct {
 	StyleTwo     string  `json:"styleTwo"`
 	StyleThree   string  `json:"styleThree"`
 	Distance     float64 `json:"distance"`
+	Score        float64 `json:"score"`
 }
 
 func GetMenuItemsByPage(limit int, offset int, session Session) ([]DetailedMenuItem, error) {

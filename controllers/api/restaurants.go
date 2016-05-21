@@ -7,7 +7,7 @@ import (
 )
 
 func V0_API_Get_Restaurant(w http.ResponseWriter, r *http.Request) {
-	restaurantId := mux.Vars(r)["id"]
+	restaurantId := mux.Vars(r)["restaurantId"]
 	restaurant, err := models.GetRestaurantById(restaurantId)
 	if err != nil {
 		JSONResponse(w, models.Response{
