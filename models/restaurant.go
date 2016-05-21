@@ -7,6 +7,9 @@ type Restaurant struct {
 	Lat         float64   `json:"lat"`
 	Long        float64   `json:"long"`
 	Name        string    `json:"name"`
+	ImageUrl    string    `json:"imageUrl"`
+	ImageHeight int64     `json:"imageHeight"`
+	ImageWidth  int64     `json:"imageWidth"`
 	Description string    `json:"description"`
 	Style       string    `json:"style"`
 	CreatedAt   time.Time `json:"-"`

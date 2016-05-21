@@ -37,6 +37,7 @@ CREATE TABLE IF NOT EXISTS `menu_item` (
     `name` varchar(255),
     `description` varchar(255),
     `flavor` varchar(100),
+    `heavy` float,
     `style_one` varchar(200),
     `style_two` varchar(200),
     `style_three` varchar(200),

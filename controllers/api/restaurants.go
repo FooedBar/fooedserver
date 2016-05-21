@@ -2,6 +2,7 @@ package api
 
 import (
 	"github.com/FooedBar/fooedserver/models"
+	"github.com/FooedBar/fooedserver/utils"
 	"github.com/gorilla/mux"
 	"net/http"
 )
@@ -22,4 +23,16 @@ func V0_API_Get_Restaurant(w http.ResponseWriter, r *http.Request) {
 		Message: "Successfully retrieved restaurant",
 		Data:    restaurant,
 	}, 200)
+}
+
+func V0_API_Get_Restaurants(w http.Response, r *http.Request) {
+	session, err := utils.GetCurrentSession(r)
+	if err != nil {
+		JSONResponse(w, models.Response{
+			Success: false,
+			Message: "Failed to get restaurants",
+			Debug:   "Internal server error. If this issue persists, please submit a bug report to FooedBar",
+		}, 500)
+		return
+	}
 }

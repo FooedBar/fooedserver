@@ -11,6 +11,7 @@ type MenuItem struct {
 	ImageUrl     string    `json:"imageUrl"`
 	ImageHeight  int64     `json:"imageHeight"`
 	ImageWidth   int64     `json:"imageWidth"`
+	Heavy        float32   `json:"heavy"`
 	Name         string    `json:"name"`
 	Description  string    `json:"description"`
 	Flavor       string    `json:"flavor"`
