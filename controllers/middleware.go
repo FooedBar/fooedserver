@@ -17,6 +17,7 @@ func GetContext(handler http.Handler) http.HandlerFunc {
 		if err != nil {
 			handler.ServeHTTP(w, r)
 			utils.ClearCurrentRequest(r)
+			return
 		}
 		if id > 0 {
 			session, err := models.FindSessionById(int64(id))
@@ -27,6 +28,7 @@ func GetContext(handler http.Handler) http.HandlerFunc {
 				utils.SetCurrentSession(r, session)
 				handler.ServeHTTP(w, r)
 				utils.ClearCurrentRequest(r)
+				return
 			}
 		} else {
 			handler.ServeHTTP(w, r)
