@@ -22,7 +22,7 @@ type MenuItem struct {
 	UpdatedAt    time.Time `json:"-"`
 }
 
-var maxDistance float64 = 5.0 //Kilometres
+var maxDistance float64 = 15.0 //Kilometres
 
 type DetailedMenuItem struct {
 	Id           int64   `json:"id"`
