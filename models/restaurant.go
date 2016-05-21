@@ -12,6 +12,8 @@ type Restaurant struct {
 	ImageWidth  int64     `json:"imageWidth"`
 	Description string    `json:"description"`
 	Style       string    `json:"style"`
+	Score       float64   `json:"score" sql:"-"`
+	Distance    float64   `json:"distance" sql:"-"`
 	CreatedAt   time.Time `json:"-"`
 	UpdatedAt   time.Time `json:"-"`
 }
@@ -22,8 +24,8 @@ func GetRestaurantById(id string) (Restaurant, error) {
 	return restaurant, err
 }
 
-func GetAllRestaurants() ([]Restaurant, error) {
-	var all []Restaurant
-	err := db.Find(&all).Error
-	return all, err
+func GetRestaurants(ids []int64) ([]Restaurant, error) {
+	var results []Restaurant
+	err := db.Where("id IN (?)", ids).Find(&results).Error
+	return results, err
 }

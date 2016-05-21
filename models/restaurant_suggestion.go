@@ -1,21 +1,78 @@
 package models
 
-type RestaurantSuggestion struct {
+import (
+	"math"
+	"sort"
+)
+
+type RestaurantSuggestionData struct {
+	Session              Session
 	SelectedItems        []MenuItem
 	OrganisedRestaurants []Restaurant
 }
 
-func (suggestion *RestaurantSuggestion) MakeSuggestions() error {
-	/*
-		allRestaurants, err := GetAllRestaurants()
-		if err != nil {
-			return err
+type Restaurants []Restaurant
+
+func (r Restaurants) Len() int           { return len(r) }
+func (r Restaurants) Less(i, j int) bool { return r[i].Distance < r[j].Distance }
+func (r Restaurants) Swap(i, j int)      { r[i], r[j] = r[j], r[i] }
+
+func (suggestion *RestaurantSuggestionData) MakeRestaurantSuggestions() error {
+	restaurantScores := make(map[int64]float64)
+	tmpSelectedItems, err := suggestion.Session.GetSelectedMenuItems()
+	if err != nil {
+		return err
+	}
+	suggestion.SelectedItems = tmpSelectedItems
+	allItems, err := GetAllMenuItemsWithinSession(suggestion.Session)
+	if err != nil {
+		return err
+	}
+	// Initialise and set distance modifier
+	for _, item := range allItems {
+		if _, ok := restaurantScores[item.RestaurantId]; ok == false {
+			restaurantScores[item.RestaurantId] -= item.Distance * 3
 		}
-		restaurantScores := map[int64]float64
-		for _, r := range allRestaurants {
-			restaurantScores[r.Id] = 0
+	}
+	for _, selection := range suggestion.SelectedItems {
+		for _, item := range allItems {
+			didMatch := false
+			if selection.StyleOne == item.StyleOne || selection.StyleOne == item.StyleTwo || selection.StyleOne == item.StyleThree {
+				restaurantScores[item.RestaurantId] += 1
+				didMatch = true
+			}
+			if selection.StyleTwo == item.StyleOne || selection.StyleOne == item.StyleTwo || selection.StyleOne == item.StyleThree {
+				restaurantScores[item.RestaurantId] += 1
+				didMatch = true
+			}
+			if selection.StyleThree == item.StyleOne || selection.StyleOne == item.StyleTwo || selection.StyleOne == item.StyleThree {
+				restaurantScores[item.RestaurantId] += 1
+				didMatch = true
+			}
+			if selection.Flavor == item.Flavor {
+				restaurantScores[item.RestaurantId] += 1
+				didMatch = true
+			}
+			if didMatch {
+				restaurantScores[item.RestaurantId] -= math.Abs(item.Heavy - selection.Heavy)
+			}
 		}
-		allItems, err := GetAllMenuItems();
-	*/
+	}
+	restaurantIds := make([]int64, len(restaurantScores))
+	tmpCnt := 0
+	for rId, _ := range restaurantScores {
+		restaurantIds[tmpCnt] = rId
+		tmpCnt++
+	}
+	var restaurants Restaurants
+	restaurants, err = GetRestaurants(restaurantIds)
+	if err != nil {
+		return err
+	}
+	for ind, r := range restaurants {
+		restaurants[ind].Score = restaurantScores[r.Id]
+	}
+	sort.Sort(sort.Reverse(restaurants))
+	suggestion.OrganisedRestaurants = restaurants
 	return nil
 }

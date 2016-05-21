@@ -1,6 +1,9 @@
 package models
 
-import "time"
+import (
+	"fmt"
+	"time"
+)
 
 type Session struct {
 	Id          int64     `json:"id"`
@@ -22,4 +25,10 @@ func (session *Session) IsValid() bool {
 
 func (session *Session) Create() error {
 	return db.Create(&session).Error
+}
+
+func (session *Session) GetSelectedMenuItems() ([]MenuItem, error) {
+	var selections []MenuItem
+	err := db.Raw("SELECT menu_item.* FROM selection, menu_item WHERE selection.session_id = " + fmt.Sprint(session.Id) + " AND menu_item.id == selection.menu_item_id").Scan(&selections).Error
+	return selections, err
 }
