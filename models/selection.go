@@ -1,9 +1,9 @@
 package models
 
 type Selection struct {
-	Id         int64 `json:"id"`
+	Id         int64 `json:"-"`
 	SessionId  int64 `json:"-"`
-	MenuItemId int64 `json:"menu_item_id"`
+	MenuItemId int64 `json:"menuItemId"`
 	Like       bool  `json:"like"`
 }
 
