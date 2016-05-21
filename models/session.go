@@ -3,11 +3,11 @@ package models
 import "time"
 
 type Session struct {
-	Id          int64
-	CurrentLat  float64
-	CurrentLong float64
-	CreatedAt   time.Time
-	UpdatedAt   time.Time
+	Id          int64     `json:"id"`
+	CurrentLat  float64   `json:"-"`
+	CurrentLong float64   `json:"-"`
+	CreatedAt   time.Time `json:"-"`
+	UpdatedAt   time.Time `json:"-"`
 }
 
 func FindSessionById(id int64) (Session, error) {
@@ -18,4 +18,8 @@ func FindSessionById(id int64) (Session, error) {
 
 func (session *Session) IsValid() bool {
 	return session.Id > 0
+}
+
+func (session *Session) Create() error {
+	return db.Create(&session).Error
 }

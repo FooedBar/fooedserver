@@ -20,6 +20,9 @@ CREATE TABLE IF NOT EXISTS `restaurant` (
     `name` varchar(255),
     `description` varchar(255),
     `style` varchar(200),
+    `image_url` varchar(255),
+    `image_width` int,
+    `image_height` int,
     `created_at` datetime,
     `updated_at` datetime,
     PRIMARY KEY (`id`)

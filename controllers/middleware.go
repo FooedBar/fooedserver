@@ -15,8 +15,8 @@ func GetContext(handler http.Handler) http.HandlerFunc {
 		idStr := r.Header.Get("X-SESSION-ID")
 		id, err := strconv.Atoi(idStr)
 		if err != nil {
-			JSONError(w, 400, "Malformed X-SESSION-ID header")
-			return
+			handler.ServeHTTP(w, r)
+			utils.ClearCurrentRequest(r)
 		}
 		if id > 0 {
 			session, err := models.FindSessionById(int64(id))
@@ -29,8 +29,8 @@ func GetContext(handler http.Handler) http.HandlerFunc {
 				utils.ClearCurrentRequest(r)
 			}
 		} else {
-			JSONError(w, 400, "Invalid X-SESSION-ID header")
-			return
+			handler.ServeHTTP(w, r)
+			utils.ClearCurrentRequest(r)
 		}
 	}
 }
