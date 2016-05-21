@@ -1,9 +1,9 @@
 package models
 
 import (
+	"fmt"
 	"math"
 	"sort"
-	"fmt"
 )
 
 type MenuSuggestionData struct {
@@ -39,15 +39,15 @@ func (suggestion *MenuSuggestionData) MakeMenuSuggestions() error {
 	for _, selection := range suggestion.SelectedItems {
 		for _, item := range allItems {
 			didMatch := false
-			if selection.StyleOne == item.StyleOne || selection.StyleOne == item.StyleTwo || selection.StyleOne == item.StyleThree {
+			if selection.StyleOne != "" && (selection.StyleOne == item.StyleOne || selection.StyleOne == item.StyleTwo || selection.StyleOne == item.StyleThree) {
 				itemScores[item.Id] += 1
 				didMatch = true
 			}
-			if selection.StyleTwo == item.StyleOne || selection.StyleOne == item.StyleTwo || selection.StyleOne == item.StyleThree {
+			if selection.StyleTwo != "" && (selection.StyleTwo == item.StyleOne || selection.StyleOne == item.StyleTwo || selection.StyleOne == item.StyleThree) {
 				itemScores[item.Id] += 1
 				didMatch = true
 			}
-			if selection.StyleThree == item.StyleOne || selection.StyleOne == item.StyleTwo || selection.StyleOne == item.StyleThree {
+			if selection.StyleThree != "" && (selection.StyleThree == item.StyleOne || selection.StyleOne == item.StyleTwo || selection.StyleOne == item.StyleThree) {
 				itemScores[item.Id] += 1
 				didMatch = true
 			}
