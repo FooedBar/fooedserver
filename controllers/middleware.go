@@ -40,6 +40,7 @@ func GetContext(handler http.Handler) http.HandlerFunc {
 
 func RequireSessionId(handler http.Handler) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
+		fmt.Println("GOT:", r.Header.Get("X-SESSION-ID"))
 		session, err := utils.GetCurrentSession(r)
 		if err != nil {
 			fmt.Println("SECOND CASE")
