@@ -22,6 +22,7 @@ func GetContext(handler http.Handler) http.HandlerFunc {
 		if id > 0 {
 			session, err := models.FindSessionById(int64(id))
 			if err != nil {
+				fmt.Println("FIRST CASE")
 				JSONError(w, 400, "Missing X-SESSION-ID header")
 				return
 			} else {
@@ -41,6 +42,7 @@ func RequireSessionId(handler http.Handler) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		session, err := utils.GetCurrentSession(r)
 		if err != nil {
+			fmt.Println("SECOND CASE")
 			JSONError(w, 400, "Missing X-SESSION-ID header")
 			return
 		}
