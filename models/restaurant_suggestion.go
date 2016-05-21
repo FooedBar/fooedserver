@@ -14,11 +14,12 @@ type RestaurantSuggestionData struct {
 type Restaurants []Restaurant
 
 func (r Restaurants) Len() int           { return len(r) }
-func (r Restaurants) Less(i, j int) bool { return r[i].Distance < r[j].Distance }
+func (r Restaurants) Less(i, j int) bool { return r[i].Score < r[j].Score }
 func (r Restaurants) Swap(i, j int)      { r[i], r[j] = r[j], r[i] }
 
 func (suggestion *RestaurantSuggestionData) MakeRestaurantSuggestions() error {
 	restaurantScores := make(map[int64]float64)
+	restaurantDistances := make(map[int64]float64)
 	tmpSelectedItems, err := suggestion.Session.GetSelectedMenuItems()
 	if err != nil {
 		return err
@@ -32,6 +33,7 @@ func (suggestion *RestaurantSuggestionData) MakeRestaurantSuggestions() error {
 	for _, item := range allItems {
 		if _, ok := restaurantScores[item.RestaurantId]; ok == false {
 			restaurantScores[item.RestaurantId] -= item.Distance * 3
+			restaurantDistances[item.RestaurantId] = item.Distance
 		}
 	}
 	for _, selection := range suggestion.SelectedItems {
@@ -71,8 +73,9 @@ func (suggestion *RestaurantSuggestionData) MakeRestaurantSuggestions() error {
 	}
 	for ind, r := range restaurants {
 		restaurants[ind].Score = restaurantScores[r.Id]
+		restaurants[ind].Distance = restaurantDistances[r.Id]
 	}
-	sort.Sort(sort.Reverse(restaurants))
+	sort.Sort(restaurants)
 	suggestion.OrganisedRestaurants = restaurants
 	return nil
 }

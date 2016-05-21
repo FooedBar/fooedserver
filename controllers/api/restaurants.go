@@ -23,17 +23,3 @@ func V0_API_Get_Restaurant(w http.ResponseWriter, r *http.Request) {
 		Data:    restaurant,
 	}, 200)
 }
-
-/*
-func V0_API_Get_Restaurants(w http.Response, r *http.Request) {
-	_, err := utils.GetCurrentSession(r)
-	if err != nil {
-		JSONResponse(w, models.Response{
-			Success: false,
-			Message: "Failed to get restaurants",
-			Debug:   "Internal server error. If this issue persists, please submit a bug report to FooedBar",
-		}, 500)
-		return
-	}
-}
-*/
