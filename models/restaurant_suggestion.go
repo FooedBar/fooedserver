@@ -75,7 +75,7 @@ func (suggestion *RestaurantSuggestionData) MakeRestaurantSuggestions() error {
 		restaurants[ind].Score = restaurantScores[r.Id]
 		restaurants[ind].Distance = restaurantDistances[r.Id]
 	}
-	sort.Reverse(restaurants)
+	sort.Sort(sort.Reverse(restaurants))
 	suggestion.OrganisedRestaurants = restaurants
 	return nil
 }
