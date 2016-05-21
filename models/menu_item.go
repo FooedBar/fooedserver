@@ -26,7 +26,7 @@ var maxDistance float64 = 5.0 //Kilometres
 type DetailedMenuItem struct {
 	Id           int64  `json:"id"`
 	RestaurantId int64  `json:"restaurantId"`
-	ImageUrl     string `json"imageUrl"`
+	ImageUrl     string `json:"imageUrl"`
 	ImageHeight  string `json:"imageHeight"`
 	ImageWidth   string `json:"imageWidth"`
 	Name         string `json:"name"`
