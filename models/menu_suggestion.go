@@ -3,6 +3,7 @@ package models
 import (
 	"math"
 	"sort"
+	"fmt"
 )
 
 type MenuSuggestionData struct {
@@ -59,10 +60,12 @@ func (suggestion *MenuSuggestionData) MakeMenuSuggestions() error {
 			}
 		}
 	}
+	fmt.Println(itemScores)
 	var menuItems DetailedMenuItems = make(DetailedMenuItems, len(itemScores))
 	for ind, item := range allItems {
 		menuItems[ind] = allItems[ind]
 		menuItems[ind].Score = itemScores[item.Id]
+
 	}
 	sort.Sort(sort.Reverse(menuItems))
 	suggestion.OrganisedItems = menuItems
