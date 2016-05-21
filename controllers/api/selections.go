@@ -1,13 +1,11 @@
 package api
 
+import ()
 import (
-
-)
-import (
-	"net/http"
 	"encoding/json"
 	"github.com/FooedBar/fooedserver/models"
 	"github.com/FooedBar/fooedserver/utils"
+	"net/http"
 )
 
 func V0_API_Post_Selection(w http.ResponseWriter, r *http.Request) {
@@ -16,7 +14,7 @@ func V0_API_Post_Selection(w http.ResponseWriter, r *http.Request) {
 	if err := decoder.Decode(&selectionObj); err != nil {
 		JSONResponse(w, models.Response{
 			Success: false,
-			Debug: "Check JSON formatting",
+			Debug:   "Check JSON formatting",
 			Message: "Failed to create selection",
 		}, 400)
 		return
@@ -25,7 +23,7 @@ func V0_API_Post_Selection(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		JSONResponse(w, models.Response{
 			Success: false,
-			Debug: "Internal Server Error. If this persists please submit a bug report to Fooedbar",
+			Debug:   "Internal Server Error. If this persists please submit a bug report to Fooedbar",
 			Message: "Failed to create selection",
 		}, 500)
 		return
@@ -34,7 +32,7 @@ func V0_API_Post_Selection(w http.ResponseWriter, r *http.Request) {
 	if err := selectionObj.Create(); err != nil {
 		JSONResponse(w, models.Response{
 			Success: false,
-			Debug: "Internal Server Error. If this persists please submit a bug report to Fooedbar",
+			Debug:   "Internal Server Error. If this persists please submit a bug report to Fooedbar",
 			Message: "Failed to create selection",
 		}, 500)
 		return
