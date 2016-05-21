@@ -1,9 +1,9 @@
 package models
 
 import (
+	"fmt"
 	"math"
 	"sort"
-	"fmt"
 )
 
 type MenuSuggestionData struct {
@@ -30,7 +30,6 @@ func (suggestion *MenuSuggestionData) MakeMenuSuggestions() error {
 	if err != nil {
 		return err
 	}
-	fmt.Println(allItems)
 	// Initialise and set distance modifier
 	for _, item := range allItems {
 		if _, ok := itemScores[item.Id]; ok == false {
@@ -62,8 +61,9 @@ func (suggestion *MenuSuggestionData) MakeMenuSuggestions() error {
 		}
 	}
 	var menuItems DetailedMenuItems = make(DetailedMenuItems, len(itemScores))
-	for i, _ := range allItems {
-		menuItems[i].Score = itemScores[menuItems[i].Id]
+	for ind, item := range allItems {
+		menuItems[ind] = allItems[ind]
+		menuItems[ind].Score = itemScores[item.Id]
 	}
 	sort.Sort(sort.Reverse(menuItems))
 	suggestion.OrganisedItems = menuItems
