@@ -4,6 +4,10 @@ type GenericResponseWithCount struct {
 	Count int64 `json:"count"`
 }
 
+type GenericItemArrayWrapper struct {
+	Items interface{} `json:"items"`
+}
+
 type GenericLimitOffsetRequest struct {
 	Limit  int `json:"limit"`
 	Offset int `json:"offset"`

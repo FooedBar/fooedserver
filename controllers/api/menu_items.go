@@ -35,6 +35,7 @@ func V0_API_Get_Menu_Items(w http.ResponseWriter, r *http.Request) {
 		JSONResponse(w, failParams, 500)
 		return
 	}
-	inProgressResp := models.Response{Success: true, Data: menuItems, Message: "Successfully Retrieved the Menu Items"}
+	wrapper := models.GenericItemArrayWrapper{Items: menuItems}
+	inProgressResp := models.Response{Success: true, Data: wrapper, Message: "Successfully Retrieved the Menu Items"}
 	JSONResponse(w, inProgressResp, 200)
 }

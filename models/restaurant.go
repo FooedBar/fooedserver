@@ -18,3 +18,9 @@ func GetRestaurantById(id string) (Restaurant, error) {
 	err := db.Where("id = ?", id).First(&restaurant).Error
 	return restaurant, err
 }
+
+func GetAllRestaurants() ([]Restaurant, error) {
+	var all []Restaurant
+	err := db.Find(&all).Error
+	return all, err
+}
