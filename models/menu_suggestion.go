@@ -26,7 +26,7 @@ func (suggestion *MenuSuggestionData) MakeMenuSuggestions() error {
 		return err
 	}
 	suggestion.SelectedItems = tmpSelectedItems
-	allItems, err := suggestion.Session.GetDetailedSelectedMenuItemsForRestaurant(suggestion.Session.Id)
+	allItems, err := suggestion.Session.GetDetailedSelectedMenuItemsForRestaurant(suggestion.RestaurantId)
 	if err != nil {
 		return err
 	}
