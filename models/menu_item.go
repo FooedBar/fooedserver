@@ -18,6 +18,7 @@ type MenuItem struct {
 	StyleOne     string    `json:"styleOne"`
 	StyleTwo     string    `json:"styleTwo"`
 	StyleThree   string    `json:"styleThree"`
+	IsLiked      bool      `json:"-"`
 	CreatedAt    time.Time `json:"-"`
 	UpdatedAt    time.Time `json:"-"`
 }

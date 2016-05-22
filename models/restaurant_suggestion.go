@@ -38,25 +38,48 @@ func (suggestion *RestaurantSuggestionData) MakeRestaurantSuggestions() error {
 	}
 	for _, selection := range suggestion.SelectedItems {
 		for _, item := range allItems {
-			didMatch := false
-			if selection.StyleOne != "" && (selection.StyleOne == item.StyleOne || selection.StyleOne == item.StyleTwo || selection.StyleOne == item.StyleThree) {
-				restaurantScores[item.RestaurantId] += 1
-				didMatch = true
-			}
-			if selection.StyleTwo != "" && (selection.StyleTwo == item.StyleOne || selection.StyleOne == item.StyleTwo || selection.StyleOne == item.StyleThree) {
-				restaurantScores[item.RestaurantId] += 1
-				didMatch = true
-			}
-			if selection.StyleThree != "" && (selection.StyleThree == item.StyleOne || selection.StyleOne == item.StyleTwo || selection.StyleOne == item.StyleThree) {
-				restaurantScores[item.RestaurantId] += 1
-				didMatch = true
-			}
-			if selection.Flavor == item.Flavor {
-				restaurantScores[item.RestaurantId] += 1
-				didMatch = true
-			}
-			if didMatch {
-				restaurantScores[item.RestaurantId] -= math.Abs(item.Heavy - selection.Heavy)
+			if selection.IsLiked == false {
+				didMatch := false
+				if selection.StyleOne != "" && (selection.StyleOne == item.StyleOne || selection.StyleOne == item.StyleTwo || selection.StyleOne == item.StyleThree) {
+					restaurantScores[item.RestaurantId] -= 1
+					didMatch = true
+				}
+				if selection.StyleTwo != "" && (selection.StyleTwo == item.StyleOne || selection.StyleOne == item.StyleTwo || selection.StyleOne == item.StyleThree) {
+					restaurantScores[item.RestaurantId] -= 1
+					didMatch = true
+				}
+				if selection.StyleThree != "" && (selection.StyleThree == item.StyleOne || selection.StyleOne == item.StyleTwo || selection.StyleOne == item.StyleThree) {
+					restaurantScores[item.RestaurantId] -= 1
+					didMatch = true
+				}
+				if selection.Flavor == item.Flavor {
+					restaurantScores[item.RestaurantId] -= 1
+					didMatch = true
+				}
+				if didMatch {
+					restaurantScores[item.RestaurantId] -= math.Abs(item.Heavy - selection.Heavy)
+				}
+			} else {
+				didMatch := false
+				if selection.StyleOne != "" && (selection.StyleOne == item.StyleOne || selection.StyleOne == item.StyleTwo || selection.StyleOne == item.StyleThree) {
+					restaurantScores[item.RestaurantId] += 1
+					didMatch = true
+				}
+				if selection.StyleTwo != "" && (selection.StyleTwo == item.StyleOne || selection.StyleOne == item.StyleTwo || selection.StyleOne == item.StyleThree) {
+					restaurantScores[item.RestaurantId] += 1
+					didMatch = true
+				}
+				if selection.StyleThree != "" && (selection.StyleThree == item.StyleOne || selection.StyleOne == item.StyleTwo || selection.StyleOne == item.StyleThree) {
+					restaurantScores[item.RestaurantId] += 1
+					didMatch = true
+				}
+				if selection.Flavor == item.Flavor {
+					restaurantScores[item.RestaurantId] += 1
+					didMatch = true
+				}
+				if didMatch {
+					restaurantScores[item.RestaurantId] -= math.Abs(item.Heavy - selection.Heavy)
+				}
 			}
 		}
 	}

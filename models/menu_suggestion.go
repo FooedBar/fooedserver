@@ -38,25 +38,48 @@ func (suggestion *MenuSuggestionData) MakeMenuSuggestions() error {
 	}
 	for _, selection := range suggestion.SelectedItems {
 		for _, item := range allItems {
-			didMatch := false
-			if selection.StyleOne != "" && (selection.StyleOne == item.StyleOne || selection.StyleOne == item.StyleTwo || selection.StyleOne == item.StyleThree) {
-				itemScores[item.Id] += 1
-				didMatch = true
-			}
-			if selection.StyleTwo != "" && (selection.StyleTwo == item.StyleOne || selection.StyleOne == item.StyleTwo || selection.StyleOne == item.StyleThree) {
-				itemScores[item.Id] += 1
-				didMatch = true
-			}
-			if selection.StyleThree != "" && (selection.StyleThree == item.StyleOne || selection.StyleOne == item.StyleTwo || selection.StyleOne == item.StyleThree) {
-				itemScores[item.Id] += 1
-				didMatch = true
-			}
-			if selection.Flavor == item.Flavor {
-				itemScores[item.Id] += 1
-				didMatch = true
-			}
-			if didMatch {
-				itemScores[item.Id] -= math.Abs(item.Heavy - selection.Heavy)
+			if selection.IsLiked == false {
+				didMatch := false
+				if selection.StyleOne != "" && (selection.StyleOne == item.StyleOne || selection.StyleOne == item.StyleTwo || selection.StyleOne == item.StyleThree) {
+					itemScores[item.Id] -= 1
+					didMatch = true
+				}
+				if selection.StyleTwo != "" && (selection.StyleTwo == item.StyleOne || selection.StyleOne == item.StyleTwo || selection.StyleOne == item.StyleThree) {
+					itemScores[item.Id] -= 1
+					didMatch = true
+				}
+				if selection.StyleThree != "" && (selection.StyleThree == item.StyleOne || selection.StyleOne == item.StyleTwo || selection.StyleOne == item.StyleThree) {
+					itemScores[item.Id] -= 1
+					didMatch = true
+				}
+				if selection.Flavor == item.Flavor {
+					itemScores[item.Id] -= 1
+					didMatch = true
+				}
+				if didMatch {
+					itemScores[item.Id] -= math.Abs(item.Heavy - selection.Heavy)
+				}
+			} else {
+				didMatch := false
+				if selection.StyleOne != "" && (selection.StyleOne == item.StyleOne || selection.StyleOne == item.StyleTwo || selection.StyleOne == item.StyleThree) {
+					itemScores[item.Id] += 1
+					didMatch = true
+				}
+				if selection.StyleTwo != "" && (selection.StyleTwo == item.StyleOne || selection.StyleOne == item.StyleTwo || selection.StyleOne == item.StyleThree) {
+					itemScores[item.Id] += 1
+					didMatch = true
+				}
+				if selection.StyleThree != "" && (selection.StyleThree == item.StyleOne || selection.StyleOne == item.StyleTwo || selection.StyleOne == item.StyleThree) {
+					itemScores[item.Id] += 1
+					didMatch = true
+				}
+				if selection.Flavor == item.Flavor {
+					itemScores[item.Id] += 1
+					didMatch = true
+				}
+				if didMatch {
+					itemScores[item.Id] -= math.Abs(item.Heavy - selection.Heavy)
+				}
 			}
 		}
 	}

@@ -29,15 +29,15 @@ func (session *Session) Create() error {
 
 func (session *Session) GetSelectedMenuItems() ([]MenuItem, error) {
 	var selections []MenuItem
-	err := db.Raw("SELECT menu_item.* FROM selection, menu_item WHERE selection.session_id = " + fmt.Sprint(session.Id) + " AND menu_item.id = selection.menu_item_id AND selection.like = 1").Scan(&selections).Error
+	err := db.Raw("SELECT menu_item.*, selection.like AS is_liked FROM selection, menu_item WHERE selection.session_id = " + fmt.Sprint(session.Id) + " AND menu_item.id = selection.menu_item_id").Scan(&selections).Error
 	return selections, err
 }
 
-func (session *Session) GetDetailedSelectedMenuItems() ([]DetailedMenuItem, error) {
+/*func (session *Session) GetDetailedSelectedMenuItems() ([]DetailedMenuItem, error) {
 	var selections []DetailedMenuItem
-	err := db.Raw("SELECT menu_item.* FROM selection, menu_item WHERE selection.session_id = " + fmt.Sprint(session.Id) + " AND menu_item.id = selection.menu_item_id AND selection.like = 1").Scan(&selections).Error
+	err := db.Raw("SELECT menu_item.* FROM selection, menu_item WHERE selection.session_id = " + fmt.Sprint(session.Id) + " AND menu_item.id = selection.menu_item_id").Scan(&selections).Error
 	return selections, err
-}
+}*/
 
 func (session *Session) GetDetailedSelectedMenuItemsForRestaurant(restaurantId int64) ([]DetailedMenuItem, error) {
 	var selections []DetailedMenuItem
